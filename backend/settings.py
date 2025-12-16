@@ -194,8 +194,8 @@ UNFOLD = {
 
 PAYTECHUZ = {
     'PAYME': {
-        'PAYME_ID': 'your_payme_id',
-        'PAYME_KEY': 'your_payme_key',
+        'PAYME_ID': 'your payme id',
+        'PAYME_KEY': 'your payme key',
         'ACCOUNT_MODEL': 'apps.payment.models.Wallet',
         'ACCOUNT_FIELD': 'id',
         'AMOUNT_FIELD': 'balance',
