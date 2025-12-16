@@ -1,0 +1,4 @@
+Django==6.0
+django-unfold==0.74.1
+paytechuz==0.3.29b0
+requests==2.32.5
