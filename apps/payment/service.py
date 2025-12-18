@@ -1,16 +1,7 @@
 from decimal import Decimal
 from typing import Optional
-from .models import Wallet
 
-
-class PaymentGatewayService:
-    def process_payment(self, amount: Decimal, token: str) -> bool:
-        """Process a payment from an external source."""
-        raise NotImplementedError
-
-    def refund_payment(self, transaction_id: str) -> bool:
-        """Refund a previous payment."""
-        raise NotImplementedError
+from apps.payment.models import Wallet
 
 
 class WalletService:

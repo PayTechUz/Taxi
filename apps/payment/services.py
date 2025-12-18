@@ -1,7 +1,12 @@
 from decimal import Decimal
 from django.db import transaction
 
+from paytechuz.gateways.payme import PaymeGateway
+from paytechuz.gateways.click import ClickGateway
+
 from apps.payment.models import Wallet
+
+from backend.settings import PAYTECHUZ
 
 
 class WalletService:
@@ -44,4 +49,35 @@ class WalletService:
         wallet.balance -= amount
         wallet.save(update_fields=['balance', 'updated_at'])
         return wallet
+
+    @staticmethod
+    def create_payment(wallet_id: int, amount: Decimal, provider: str) -> str:
+        gateway = None
+
+        if provider == 'payme':
+            gateway = PaymeGateway(
+                payme_id=PAYTECHUZ.get('PAYME', {}).get('PAYME_ID'),
+                payme_key=PAYTECHUZ.get('PAYME', {}).get('PAYME_KEY'),
+                is_test_mode=PAYTECHUZ.get('PAYME', {}).get('IS_TEST_MODE'),
+            )
+            return gateway.create_payment(
+                id=wallet_id,
+                amount=amount,
+            )
+
+        elif provider == 'click':
+            gateway = ClickGateway(
+                service_id=PAYTECHUZ.get('CLICK', {}).get('SERVICE_ID'),
+                merchant_id=PAYTECHUZ.get('CLICK', {}).get('MERCHANT_ID'),
+                merchant_user_id=PAYTECHUZ.get('CLICK', {}).get('MERCHANT_USER_ID'),
+                secret_key=PAYTECHUZ.get('CLICK', {}).get('SECRET_KEY'),
+                is_test_mode=PAYTECHUZ.get('CLICK', {}).get('IS_TEST_MODE'),
+            )
+            return gateway.create_payment(
+                id=wallet_id,
+                amount=amount,
+            )
+
+        raise ValueError('Invalid provider')
+
 

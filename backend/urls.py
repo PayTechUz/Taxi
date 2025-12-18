@@ -5,7 +5,9 @@ URL configuration for backend project.
 from django.contrib import admin
 from django.urls import path, include
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/payment/', include('apps.payment.urls')),
+    path('api/payments/', include('apps.payment.urls')),
+    path('api/auth/', include('apps.authentication.urls')),
 ]

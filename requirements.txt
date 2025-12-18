@@ -2,3 +2,6 @@ Django==6.0
 django-unfold==0.74.1
 paytechuz==0.3.29
 requests==2.32.5
+
+djangorestframework
+djangorestframework-simplejwt

@@ -11,26 +11,21 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
 from pathlib import Path
+from environs import Env
+
 from django.utils.translation import gettext_lazy as _
 from django.urls import reverse_lazy
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+env = Env()
+env.read_env()
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-t*0%lt0bc(01@a3#l+es^2byp+(vv^db2q&@-mr_zv5c0&a0cu'
 
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-
-
-# Application definition
 
 
 INSTALLED_APPS = [
@@ -48,7 +43,17 @@ INSTALLED_APPS = [
     'apps.authentication',
 
     'apps.payment',
+
+    'rest_framework',
+    'rest_framework_simplejwt',
+    'rest_framework_simplejwt.token_blacklist',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+}
 
 AUTH_USER_MODEL = 'authentication.User'
 
@@ -194,8 +199,8 @@ UNFOLD = {
 
 PAYTECHUZ = {
     'PAYME': {
-        'PAYME_ID': 'your payme id',
-        'PAYME_KEY': 'your payme key',
+        'PAYME_ID': env.str('PAYME_ID'),
+        'PAYME_KEY': env.str('PAYME_KEY'),
         'ACCOUNT_MODEL': 'apps.payment.models.Wallet',
         'ACCOUNT_FIELD': 'id',
         'AMOUNT_FIELD': 'balance',
@@ -203,10 +208,10 @@ PAYTECHUZ = {
         'IS_TEST_MODE': True,
     },
     'CLICK': {
-        'SERVICE_ID': 'your_service_id',
-        'MERCHANT_ID': 'your_merchant_id',
-        'MERCHANT_USER_ID': 'your_merchant_user_id',
-        'SECRET_KEY': 'your_secret_key',
+        'SERVICE_ID': env.str('CLICK_SERVICE_ID'),
+        'MERCHANT_ID': env.str('CLICK_MERCHANT_ID'),
+        'MERCHANT_USER_ID': env.str('CLICK_MERCHANT_USER_ID'),
+        'SECRET_KEY': env.str('CLICK_SECRET_KEY'),
         'ACCOUNT_MODEL': 'apps.payment.models.Wallet',
         'ACCOUNT_FIELD': 'id',
         'AMOUNT_FIELD': 'balance',

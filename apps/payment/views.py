@@ -1,6 +1,29 @@
+from rest_framework.views import APIView
+from rest_framework.response import Response
+
 from paytechuz.integrations.django.views import BasePaymeWebhookView, BaseClickWebhookView
 
+from rest_framework import permissions
+from apps.payment.models import Wallet
 from apps.payment.services import WalletService
+
+
+class TopUpBalanceView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request):
+        """Create payment."""
+        amount = request.data.get('amount')
+        provider = request.data.get('provider')
+
+        if not amount or not provider:
+            return Response({'error': 'Missing required fields'}, status=400)
+
+        wallet, _ = Wallet.objects.get_or_create(user=request.user)
+
+        payment_url = WalletService.create_payment(wallet.id, amount, provider)
+
+        return Response({'payment_url': payment_url})
 
 
 class PaymeWebhookView(BasePaymeWebhookView):
