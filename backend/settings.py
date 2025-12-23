@@ -215,7 +215,7 @@ PAYTECHUZ = {
         'ACCOUNT_MODEL': 'apps.payment.models.Wallet',
         'ACCOUNT_FIELD': 'id',
         'AMOUNT_FIELD': 'balance',
+        'ONE_TIME_PAYMENT': False,
         'IS_TEST_MODE': True,
     }
 }
-
