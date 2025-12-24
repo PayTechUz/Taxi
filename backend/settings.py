@@ -205,7 +205,7 @@ PAYTECHUZ = {
         'ACCOUNT_FIELD': 'id',
         'AMOUNT_FIELD': 'balance',
         'ONE_TIME_PAYMENT': False,
-        'IS_TEST_MODE': True,
+        'IS_TEST_MODE': env.bool('PAYME_IS_TEST_MODE', False),
     },
     'CLICK': {
         'SERVICE_ID': env.str('CLICK_SERVICE_ID'),
@@ -216,6 +216,24 @@ PAYTECHUZ = {
         'ACCOUNT_FIELD': 'id',
         'AMOUNT_FIELD': 'balance',
         'ONE_TIME_PAYMENT': False,
-        'IS_TEST_MODE': True,
+        'IS_TEST_MODE': env.bool('CLICK_IS_TEST_MODE', False),
+    },
+    'UZUM': {
+        'SERVICE_ID': env.str('UZUM_SERVICE_ID'),
+        'USERNAME': env.str('UZUM_USERNAME'),
+        'PASSWORD': env.str('UZUM_PASSWORD'),
+        'ACCOUNT_MODEL': 'apps.payment.models.Wallet',
+        'ACCOUNT_FIELD': 'id',
+        'AMOUNT_FIELD': 'balance',
+        'IS_TEST_MODE': env.bool('UZUM_IS_TEST_MODE', False),
+    },
+    'PAYNET': {
+        'SERVICE_ID': env.str('PAYNET_SERVICE_ID'),
+        'USERNAME': env.str('PAYNET_USERNAME'),
+        'PASSWORD': env.str('PAYNET_PASSWORD'),
+        'ACCOUNT_MODEL': 'apps.payment.models.Wallet',
+        'ACCOUNT_FIELD': 'id',
+        'AMOUNT_FIELD': 'balance',
+        'IS_TEST_MODE': env.bool('PAYNET_IS_TEST_MODE', False),
     }
 }

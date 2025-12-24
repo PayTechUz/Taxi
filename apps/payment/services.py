@@ -1,6 +1,7 @@
 from decimal import Decimal
 from django.db import transaction
 
+from paytechuz.gateways.uzum import UzumGateway
 from paytechuz.gateways.payme import PaymeGateway
 from paytechuz.gateways.click import ClickGateway
 
@@ -76,6 +77,19 @@ class WalletService:
             return gateway.create_payment(
                 id=wallet_id,
                 amount=amount,
+            )
+
+        elif provider == 'uzum':
+            gateway = UzumGateway(
+                service_id=PAYTECHUZ.get('UZUM', {}).get('SERVICE_ID'),
+                username=PAYTECHUZ.get('UZUM', {}).get('USERNAME'),
+                password=PAYTECHUZ.get('UZUM', {}).get('PASSWORD'),
+                is_test_mode=PAYTECHUZ.get('UZUM', {}).get('IS_TEST_MODE'),
+            )
+            return gateway.create_payment(
+                id=wallet_id,
+                amount=amount,
+                return_url="https://example.com"
             )
 
         raise ValueError('Invalid provider')

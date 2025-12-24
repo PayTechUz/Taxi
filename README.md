@@ -1,6 +1,6 @@
 # Taxi Backend
 
-Foydalanuvchi balansiga to'lovlarni qabul qilish uchun mo'ljallangan backend loyiha. Payme va Click to'lov tizimlari orqali foydalanuvchilar o'z hamyonlarini to'ldirishlari mumkin.
+Foydalanuvchi balansiga to'lovlarni qabul qilish uchun mo'ljallangan backend loyiha. Payme, Click va Uzum to'lov tizimlari orqali foydalanuvchilar o'z hamyonlarini to'ldirishlari mumkin.
 
 ## O'rnatish
 
@@ -147,7 +147,7 @@ curl -X POST http://127.0.0.1:8000/api/payments/top-up/ \
            "provider": "payme"
          }'
 ```
-*Provider qiymatlari: `payme` yoki `click`.*
+*Provider qiymatlari: `payme`, `click`, `uzum`.*
 
 **Response (Payme):**
 ```json
@@ -160,5 +160,12 @@ curl -X POST http://127.0.0.1:8000/api/payments/top-up/ \
 ```json
 {
     "payment_url": "https://my.click.uz/services/pay?service_id=123&merchant_id=123&amount=1000&transaction_param=2"
+}
+```
+
+**Response (Uzum):**
+```json
+{
+    "payment_url": "https://www.uzumbank.uz/open-service?serviceId=123&order_id=2&amount=100000&redirectUrl=https://example.com"
 }
 ```

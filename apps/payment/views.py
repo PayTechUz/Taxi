@@ -1,7 +1,7 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
-from paytechuz.integrations.django.views import BasePaymeWebhookView, BaseClickWebhookView
+from paytechuz.integrations.django.views import BasePaymeWebhookView, BaseClickWebhookView, BaseUzumWebhookView
 
 from rest_framework import permissions
 from apps.payment.models import Wallet
@@ -67,3 +67,26 @@ class ClickWebhookView(BaseClickWebhookView):
             amount=transaction.amount
         )
 
+
+class UzumWebhookView(BaseUzumWebhookView):
+    def successfully_payment(self, params, transaction):
+        """Handle successful Uzum payment."""
+        WalletService.add_balance(
+            wallet_id=transaction.account_id,
+            amount=transaction.amount
+        )
+
+    def cancelled_payment(self, params, transaction):
+        """Handle cancelled Uzum payment."""
+        WalletService.deduct_balance(
+            wallet_id=transaction.account_id,
+            amount=transaction.amount
+        )
+
+    def get_check_data(self, params, account):
+        """
+        Additional data to check transaction.
+        This method is optional.
+        """
+        check_info = WalletService.get_check_data(account.id)
+        return check_info
