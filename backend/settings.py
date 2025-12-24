@@ -226,6 +226,7 @@ PAYTECHUZ = {
         'ACCOUNT_FIELD': 'id',
         'AMOUNT_FIELD': 'balance',
         'IS_TEST_MODE': env.bool('UZUM_IS_TEST_MODE', False),
+        'ONE_TIME_PAYMENT': False,
     },
     'PAYNET': {
         'SERVICE_ID': env.str('PAYNET_SERVICE_ID'),
@@ -235,5 +236,6 @@ PAYTECHUZ = {
         'ACCOUNT_FIELD': 'id',
         'AMOUNT_FIELD': 'balance',
         'IS_TEST_MODE': env.bool('PAYNET_IS_TEST_MODE', False),
+        'ONE_TIME_PAYMENT': False,
     }
 }

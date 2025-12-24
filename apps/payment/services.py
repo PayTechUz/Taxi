@@ -4,6 +4,7 @@ from django.db import transaction
 from paytechuz.gateways.uzum import UzumGateway
 from paytechuz.gateways.payme import PaymeGateway
 from paytechuz.gateways.click import ClickGateway
+from paytechuz.gateways.paynet import PaynetGateway
 
 from apps.payment.models import Wallet
 
@@ -85,6 +86,16 @@ class WalletService:
                 username=PAYTECHUZ.get('UZUM', {}).get('USERNAME'),
                 password=PAYTECHUZ.get('UZUM', {}).get('PASSWORD'),
                 is_test_mode=PAYTECHUZ.get('UZUM', {}).get('IS_TEST_MODE'),
+            )
+            return gateway.create_payment(
+                id=wallet_id,
+                amount=amount,
+                return_url="https://example.com"
+            )
+
+        elif provider == 'paynet':
+            gateway = PaynetGateway(
+                merchant_id=675,
             )
             return gateway.create_payment(
                 id=wallet_id,
