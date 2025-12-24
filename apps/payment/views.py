@@ -41,6 +41,16 @@ class PaymeWebhookView(BasePaymeWebhookView):
             amount=transaction.amount
         )
 
+    def get_check_data(self, params, account):
+        """
+        Additional data to check transaction.
+        This method is optional.
+        """
+        check_info = WalletService.get_check_data(account.id)
+        return {
+            "additional": check_info
+        }
+
 
 class ClickWebhookView(BaseClickWebhookView):
     def successfully_payment(self, params, transaction):

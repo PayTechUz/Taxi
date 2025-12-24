@@ -80,4 +80,11 @@ class WalletService:
 
         raise ValueError('Invalid provider')
 
+    @staticmethod
+    def get_check_data(wallet_id: int) -> dict:
+        wallet = Wallet.objects.get(id=wallet_id)
+        return {
+            "first_name": wallet.user.first_name,
+            "amount": float(wallet.balance),
+        }
 
