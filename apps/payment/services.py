@@ -85,6 +85,5 @@ class WalletService:
         wallet = Wallet.objects.get(id=wallet_id)
         return {
             "first_name": wallet.user.first_name,
-            "amount": float(wallet.balance),
+            "balance": float(wallet.balance),
         }
-
