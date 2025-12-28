@@ -29,6 +29,7 @@ ALLOWED_HOSTS = ['*']
 
 
 INSTALLED_APPS = [
+    'corsheaders',
     'unfold',
     'unfold.contrib.filters',
     'django.contrib.admin',
@@ -58,6 +59,7 @@ REST_FRAMEWORK = {
 AUTH_USER_MODEL = 'authentication.User'
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -239,3 +241,12 @@ PAYTECHUZ = {
         'ONE_TIME_PAYMENT': False,
     }
 }
+
+CORS_ALLOW_ALL_ORIGINS = True
+
+# CORS_ALLOWED_ORIGINS = [
+#     "http://localhost:3000",
+#     "http://127.0.0.1:3000",
+# ]
+
+CORS_ALLOW_CREDENTIALS = True
